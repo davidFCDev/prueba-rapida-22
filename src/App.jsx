@@ -14,6 +14,16 @@ function App() {
     };
   });
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Formulario enviado");
+  };
+
+  const handleChange = (event) => {
+    const newSearch = event.target.value;
+    console.log(newSearch);
+  };
+
   return (
     <div className="page">
       <header>
