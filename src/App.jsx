@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 import { Movies } from "./components/Movies";
-import responseMovies from "./mocks/with-results.json";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { useMovies } from "./hooks/useMovies";
 
 function useSearch() {
   const [search, updateSearch] = useState("");
@@ -33,20 +33,11 @@ function useSearch() {
 
 function App() {
   const { search, updateSearch, error } = useSearch();
-  const movies = responseMovies.Search;
-
-  const mappedMovies = movies.map((movie) => {
-    return {
-      id: movie.imdbID,
-      title: movie.Title,
-      year: movie.Year,
-      poster: movie.Poster,
-    };
-  });
+  const { movies, getMovies, loading } = useMovies({ search });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Formulario enviado");
+    getMovies({ search });
   };
 
   const handleChange = (event) => {
@@ -73,9 +64,7 @@ function App() {
         {error && <p className="error">{error}</p>}
       </header>
 
-      <main>
-        <Movies movies={mappedMovies} />
-      </main>
+      <main>{loading ? <p>Loading...</p> : <Movies movies={movies} />}</main>
     </div>
   );
 }
