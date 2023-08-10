@@ -51,15 +51,17 @@ function App() {
 
   const handleChange = (event) => {
     const newSearch = event.target.value;
-    console.log(newSearch);
+    updateSearch(newSearch);
   };
 
   return (
     <div className="page">
       <header>
         <h1>Buscador de películas</h1>
-        <form className="form">
+        <form onSubmit={handleSubmit} className="form">
           <input
+            onChange={handleChange}
+            value={search}
             type="text"
             className="input"
             placeholder="Escribe aquí tu película favorita"
@@ -68,6 +70,7 @@ function App() {
             Buscar
           </button>
         </form>
+        {error && <p className="error">{error}</p>}
       </header>
 
       <main>
