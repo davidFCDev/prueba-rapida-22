@@ -32,8 +32,13 @@ function useSearch() {
 }
 
 function App() {
+  const [sort, setSort] = useState(false);
   const { search, updateSearch, error } = useSearch();
-  const { movies, getMovies, loading } = useMovies({ search });
+  const { movies, getMovies, loading } = useMovies({ search, sort });
+
+  const handleSort = () => {
+    setSort(!sort);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -57,6 +62,7 @@ function App() {
             className="input"
             placeholder="Escribe aquí tu película favorita"
           />
+          <input type="checkbox" onChange={handleSort} checked={sort} />
           <button type="submit" className="button">
             Buscar
           </button>
